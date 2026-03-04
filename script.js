@@ -1,6 +1,8 @@
-// BASE DEL ALGORITMO (modelo CourseMash adaptado a videojuegos)
+// ===============================
+// BASE DEL ALGORITMO A/B
+// ===============================
 
-const videojuegos = [
+const videojuegosBase = [
     { nombre: "The Witcher 3", puntos: 0 },
     { nombre: "Elden Ring", puntos: 0 },
     { nombre: "Fortnite", puntos: 0 },
@@ -13,17 +15,26 @@ const videojuegos = [
     { nombre: "Red Dead Redemption 2", puntos: 0 }
 ];
 
+// Cargar datos guardados si existen
+let videojuegos = JSON.parse(localStorage.getItem("videojuegos")) || videojuegosBase;
+let historial = JSON.parse(localStorage.getItem("historial")) || [];
+let totalComparaciones = historial.length;
+
 let juegoA;
 let juegoB;
-let totalComparaciones = 0;
 
 const btnA = document.getElementById("btnA");
 const btnB = document.getElementById("btnB");
 const listaRanking = document.getElementById("listaRanking");
 const contador = document.getElementById("contador");
+const exportarRankingBtn = document.getElementById("exportarBtn");
+const exportarHistorialBtn = document.getElementById("exportarHistorialBtn");
+
+// ===============================
+// SELECCIÓN A/B
+// ===============================
 
 function seleccionarJuegos() {
-
     const indexA = Math.floor(Math.random() * videojuegos.length);
     let indexB = Math.floor(Math.random() * videojuegos.length);
 
@@ -38,17 +49,33 @@ function seleccionarJuegos() {
     btnB.textContent = juegoB.nombre;
 }
 
+// ===============================
+// VOTACIÓN
+// ===============================
+
 function votar(juegoElegido) {
+
     juegoElegido.puntos += 1;
+
+    historial.push({
+        juegoA: juegoA.nombre,
+        juegoB: juegoB.nombre,
+        ganador: juegoElegido.nombre
+    });
+
     totalComparaciones++;
     contador.textContent = totalComparaciones;
 
+    guardarDatos();
     actualizarRanking();
     seleccionarJuegos();
 }
 
-function actualizarRanking() {
+// ===============================
+// RANKING
+// ===============================
 
+function actualizarRanking() {
     listaRanking.innerHTML = "";
 
     const ordenados = [...videojuegos].sort((a, b) => b.puntos - a.puntos);
@@ -60,8 +87,77 @@ function actualizarRanking() {
     });
 }
 
+// ===============================
+// GUARDAR EN LOCALSTORAGE
+// ===============================
+
+function guardarDatos() {
+    localStorage.setItem("videojuegos", JSON.stringify(videojuegos));
+    localStorage.setItem("historial", JSON.stringify(historial));
+}
+
+// ===============================
+// EXPORTAR RANKING
+// ===============================
+
+function exportarRanking() {
+
+    let contenido = "Posicion,Videojuego,Puntos\n";
+
+    const ordenados = [...videojuegos].sort((a, b) => b.puntos - a.puntos);
+
+    ordenados.forEach((juego, index) => {
+        contenido += `${index + 1},${juego.nombre},${juego.puntos}\n`;
+    });
+
+    descargarCSV(contenido, "ranking_videojuegos.csv");
+}
+
+// ===============================
+// EXPORTAR HISTORIAL
+// ===============================
+
+function exportarHistorial() {
+
+    let contenido = "Juego A,Juego B,Ganador\n";
+
+    historial.forEach(item => {
+        contenido += `${item.juegoA},${item.juegoB},${item.ganador}\n`;
+    });
+
+    descargarCSV(contenido, "historial_comparaciones.csv");
+}
+
+// ===============================
+// FUNCIÓN DESCARGA CSV
+// ===============================
+
+function descargarCSV(contenido, nombreArchivo) {
+    const blob = new Blob([contenido], { type: "text/csv;charset=utf-8;" });
+    const url = URL.createObjectURL(blob);
+
+    const enlace = document.createElement("a");
+    enlace.setAttribute("href", url);
+    enlace.setAttribute("download", nombreArchivo);
+    document.body.appendChild(enlace);
+    enlace.click();
+    document.body.removeChild(enlace);
+}
+
+// ===============================
+// EVENTOS
+// ===============================
+
 btnA.addEventListener("click", () => votar(juegoA));
 btnB.addEventListener("click", () => votar(juegoB));
 
+exportarRankingBtn.addEventListener("click", exportarRanking);
+exportarHistorialBtn.addEventListener("click", exportarHistorial);
+
+// ===============================
+// INICIO
+// ===============================
+
+contador.textContent = totalComparaciones;
 seleccionarJuegos();
 actualizarRanking();
