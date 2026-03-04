@@ -1,0 +1,77 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    text-align: center;
+    color: white;
+    background: linear-gradient(-45deg, #ff0080, #ff8c00, #40e0d0, #8a2be2);
+    background-size: 400% 400%;
+    animation: fondo 10s ease infinite;
+}
+
+@keyframes fondo {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.container {
+    padding: 20px;
+}
+
+h1 {
+    font-size: 36px;
+}
+
+.comparison {
+    margin: 30px 0;
+}
+
+button {
+    padding: 15px 25px;
+    font-size: 16px;
+    margin: 10px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: 0.2s;
+}
+
+#btnA {
+    background-color: #ff4b2b;
+}
+
+#btnB {
+    background-color: #1e90ff;
+}
+
+button:hover {
+    transform: scale(1.1);
+}
+
+.vs {
+    font-size: 20px;
+    margin: 0 10px;
+}
+
+.ranking {
+    background: rgba(0,0,0,0.3);
+    padding: 15px;
+    border-radius: 12px;
+    display: inline-block;
+    min-width: 280px;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+li {
+    margin: 6px 0;
+}
+
+.contador {
+    margin-top: 15px;
+    font-size: 14px;
+}
