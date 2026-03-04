@@ -13,22 +13,29 @@
         <h1>🎮 GameMash</h1>
         <p>Elige el videojuego que prefieras</p>
 
+        <!-- Comparación A/B -->
         <div class="comparison">
             <button id="btnA"></button>
             <span class="vs">VS</span>
             <button id="btnB"></button>
         </div>
 
+        <!-- Ranking -->
         <div class="ranking">
             <h2>🏆 Ranking</h2>
             <ul id="listaRanking"></ul>
         </div>
 
+        <!-- Botones de exportación -->
+        <button id="exportarBtn" class="exportar">📊 Exportar Ranking</button>
+        <button id="exportarHistorialBtn" class="exportar">📄 Exportar Historial Completo</button>
+
+        <!-- Contador de comparaciones -->
         <p class="contador">Comparaciones: <span id="contador">0</span></p>
 
     </div>
 
-    <!-- IMPORTANTE: defer evita errores de carga -->
+    <!-- Script principal -->
     <script src="script.js" defer></script>
 
 </body>
