@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>GameMash - Ranking de Videojuegos</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="container">
+
+        <h1>🎮 GameMash</h1>
+        <p>Elige el videojuego que prefieras</p>
+
+        <div class="comparison">
+            <button id="btnA"></button>
+            <span class="vs">VS</span>
+            <button id="btnB"></button>
+        </div>
+
+        <div class="ranking">
+            <h2>🏆 Ranking</h2>
+            <ul id="listaRanking"></ul>
+        </div>
+
+        <p class="contador">Comparaciones: <span id="contador">0</span></p>
+
+    </div>
+
+    <!-- IMPORTANTE: defer evita errores de carga -->
+    <script src="script.js" defer></script>
+
+</body>
+</html>
